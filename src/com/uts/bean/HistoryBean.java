@@ -7,7 +7,6 @@ public class HistoryBean {
 	private int bid;
 	private String card;
 	private String bookname;
-	private String adminname;
 	private String username;
 	private String begintime;
 	private String endtime;
@@ -55,13 +54,6 @@ public class HistoryBean {
 		this.bookname = bookname;
 	}
 
-	public String getAdminname() {
-		return adminname;
-	}
-
-	public void setAdminname(String adminname) {
-		this.adminname = adminname;
-	}
 
 	public String getUsername() {
 		return username;
