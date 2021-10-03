@@ -34,9 +34,7 @@ body {
 	
 
 	<div class="container">
-		<!-- left, vertical navbar & content -->
 		<div class="row">
-			<!-- left, vertical navbar -->
 			<div class="col-md-2 bootstrap-admin-col-left">
 				<ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
 					<li><a href="/e-library/admin_book.jsp"><i
@@ -50,7 +48,6 @@ body {
 				
 			</div>
 
-			<!-- content -->
 			<div class="col-md-10">
 				<div class="row">
 					<div class="col-md-6">

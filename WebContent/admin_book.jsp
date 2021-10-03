@@ -31,9 +31,7 @@ body {
 <body class="bootstrap-admin-with-small-navbar">
 	
 	<div class="container">
-		<!-- left, vertical navbar & content -->
 		<div class="row">
-			<!-- left, vertical navbar -->
 			<div class="col-md-2 bootstrap-admin-col-left">
 				<ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
 					<li><a href="/e-library/admin_book.jsp"><i
@@ -47,7 +45,6 @@ body {
 				
 			</div>
 
-			<!-- content -->
 			<div class="col-md-10">
 				<div class="row">
 					<div class="col-lg-12">
@@ -59,7 +56,6 @@ body {
 								class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
 								<form class="form-horizontal" action="/e-library/selectServlet"
 									method="post">
-									<!-- <input type="hidden" name="tip" value="1"> -->
 									<input type="hidden" name="tip" value="1">
 									<div class="col-lg-7 form-group">
 										<label class="col-lg-4 control-label" for="query_bname">Book information</label>
@@ -96,7 +92,6 @@ body {
 									<th>Book price</th>
 									<th>Borrowing price</th>
 									<th>Overdue amount</th>
-									<th>Borrowing status</th>
 									<th>Management options</th>
 								</tr>
 							</thead>
@@ -122,9 +117,6 @@ body {
 								<td><%=bean.getBorrowPrice()%></td>
 								<td><%=bean.getOverduePrice()%></td>
 								<td>
-								<%=bean.getState()%>
-								</td>
-								<td>
 								<button type="button" class="btn btn-warning btn-xs"
 										data-toggle="modal" data-target="#updateModal" id="btn_update"
 										onclick="showInfo2('<%=bean.getBid()%>','<%=bean.getCard()%>','<%=bean.getType()%>','<%=bean.getName()%>',
@@ -135,11 +127,11 @@ body {
 							<%
 								}
 							%>
-							
-						</table>
+		
+					</table>
 					</div>
 				</div>
-				<script type="text/javascript">
+	<script type="text/javascript">
 		
 
 		function deletebook(bid) {
@@ -152,6 +144,11 @@ body {
 		
 		function goToAddBook(){
 			location.href = "/e-library/addBook.jsp" ;
+		}
+		
+		function showInfo2(bid, card, type, name, author, press, bookPrice,borrowPrice,overduePrice){
+			location.href = "/e-library/updateBookPage.jsp?bid=" +bid+"&card="+card+"&type="+type+"&name="+name+
+					"&author="+author+"&press="+press+"&bookPrice="+bookPrice+"&borrowPrice="+borrowPrice+"&overduePrice="+overduePrice; 
 		}
 		
 		
