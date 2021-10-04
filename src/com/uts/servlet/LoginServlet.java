@@ -32,8 +32,6 @@ public class LoginServlet extends HttpServlet {
 		boolean result = userdao.Login_verify(username, password);
 		
 		
-		
-		
 			HttpSession session = request.getSession();
 			if (result) {
 				
@@ -41,6 +39,7 @@ public class LoginServlet extends HttpServlet {
 				
 				AdminDao admindao = new AdminDao();
 				adminbean = admindao.getAdminInfo(username, password);
+				session.setAttribute("admin", adminbean);
 
 				if (adminbean.getStatus() == 1) {
 					response.sendRedirect("/e-library/index.jsp");

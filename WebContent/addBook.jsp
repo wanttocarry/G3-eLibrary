@@ -31,9 +31,7 @@ body {
 <body class="bootstrap-admin-with-small-navbar">
 	
 	<div class="container">
-		<!-- left, vertical navbar & content -->
 		<div class="row">
-			<!-- left, vertical navbar -->
 			<div class="col-md-2 bootstrap-admin-col-left">
 				<ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
 					<li><a href="/e-library/admin_book.jsp"><i
@@ -47,7 +45,6 @@ body {
 				
 			</div>
 
-			<!-- content -->
 			<div class="col-md-10">
 				<div class="row">
 					<div class="col-lg-12">
@@ -59,7 +56,6 @@ body {
 								class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
 								<form class="form-horizontal" action="/e-library/AddBookServlet"
 									method="post">
-									<!-- <input type="hidden" name="tip" value="1"> -->
 									<input type="hidden" name="tip" value="1">
 									<div class="col-lg-7 form-group">
 										<label class="col-lg-4 control-label" for="query_bname">Book ID</label>

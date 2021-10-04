@@ -10,7 +10,6 @@ public class BookBean {
 	private String press;
 	private float bookPrice;
 	private float borrowPrice;
-	private int state;
 	private float overduePrice;
 
 	public int getBid() {
@@ -87,12 +86,6 @@ public class BookBean {
 		this.borrowPrice = borrowPrice;
 	}
 
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
+	
 
 }
