@@ -39,10 +39,10 @@ body {
 				<ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
 					<li><a href="/e-library/admin_book.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> Book management</a></li>
-					<li><a href="#"><i
+					<li><a href="/e-library/admin_user.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> user management</a></li>
-					<li><a href="#"><i
-							class="glyphicon glyphicon-chevron-right"></i> Book classification management</a></li>
+					<li><a href="/e-library/UserLogOutServlet"><i
+							class="glyphicon glyphicon-chevron-right"></i> Log out</a></li>
 					
 				</ul><br><br>
 				
@@ -78,21 +78,7 @@ body {
 					</div>
 				</div>
 				
-				<div class="row">
-					<div class="col-md-6">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<div class="text-muted bootstrap-admin-box-title">Book classification management</div>
-							</div>
-							<div class="bootstrap-admin-panel-content">
-								<ul>
-									<li>View the book classification information and display the classification ID</li>
-									<li>Add, modify, or delete Book classifications</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+			
 				
 				
 				

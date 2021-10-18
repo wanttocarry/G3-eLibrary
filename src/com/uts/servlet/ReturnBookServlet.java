@@ -28,7 +28,6 @@ public class ReturnBookServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				int hid = Integer.parseInt(request.getParameter("hid"));
-				String card = request.getParameter("card");
 				int bid = Integer.parseInt(request.getParameter("bid"));
 				int aid = Integer.parseInt(request.getParameter("aid"));
 

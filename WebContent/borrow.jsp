@@ -1,3 +1,4 @@
+
 <%@page import="com.uts.bean.AdminBean"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page
@@ -41,8 +42,10 @@ body {
 							class="glyphicon glyphicon-chevron-right"></i> Book information</a></li>
 					<li><a href="/e-library/borrow.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> Borrowing information</a></li>
-					<li><a href="#"><i
-							class="glyphicon glyphicon-chevron-right"></i> Book classification management</a></li>
+					<li><a href="/e-library/user_information.jsp"><i
+							class="glyphicon glyphicon-chevron-right"></i> User information</a></li>
+							<li><a href="/e-library/UserLogOutServlet"><i
+							class="glyphicon glyphicon-chevron-right"></i> Log Out </a></li>
 					
 				</ul><br><br>
 				
@@ -57,11 +60,11 @@ body {
 							</div>
 							<div
 								class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
-								<form class="form-horizontal" action="/e-library/UserSelectServlet"
+								<form class="form-horizontal" action="/e-library/BorrowSlectServlet"
 									method="post">
 									<input type="hidden" name="tip" value="1">
 									<div class="col-lg-7 form-group">
-										<label class="col-lg-4 control-label" for="query_bname">Book information</label>
+										<label class="col-lg-4 control-label" for="query_bname">Borrowing information</label>
 										<div class="col-lg-8">
 											<input class="form-control" id="bookName" name="name"
 												type="text" value=""> <label class="control-label"
@@ -102,8 +105,15 @@ body {
 								
 								BookDao bookdao = new BookDao();
 									
-									bookdata = (ArrayList<HistoryBean>) bookdao.get_HistoryListInfo(borrowStatus, user.getAid());
-								for (HistoryBean bean : bookdata) {
+								bookdata = (ArrayList<HistoryBean>) bookdao.get_HistoryListInfo(borrowStatus, user.getAid());
+									for (HistoryBean bean : bookdata) {
+										
+										
+										BookBean book =  bookdao.get_BookInfo(bean.getBid());
+										double borrowPrice = book.getBorrowPrice();
+										
+										double overduePrice = book.getOverduePrice();
+										
 							%>
 							<tbody style="color:#33b031;">
 								<td><%=bean.getCard()%></td>
@@ -113,7 +123,7 @@ body {
 								<td><%=bean.getEndtime()%></td>
 								<td>
 									<button type="button" class="btn btn-warning btn-xs"
-										data-toggle="modal" onclick="returnBook(<%=bean.getHid()%>,<%=bean.getCard()%>,'<%=bean.getEndtime()%> 00:00:00',<%=bean.getBid()%>,<%=bean.getAid()%>)">Return</button>
+										data-toggle="modal" onclick="returnBook(<%=bean.getHid()%>,<%=bean.getCard()%>,'<%=bean.getEndtime()%> 00:00:00',<%=bean.getBid()%>,<%=bean.getAid()%>,<%=borrowPrice%>,<%=overduePrice%>)">Return</button>
 					 
 					                <button type="button" class="btn btn-danger btn-xs"
 										onclick="delayBook(<%=bean.getHid()%>,'<%=bean.getEndtime()%> 00:00:00')">Delay</button>
@@ -126,20 +136,77 @@ body {
 				</div>
 				
 				<script type="text/javascript">
-			    function returnBook(hid,card,endTime,bid,aid) {
-			    	con=confirm("Confirm whether to return the book?"); 
-			    	if(con==true){
-			    		location.href = "/e-library/ReturnBookServlet?hid="+hid+"&card="+card+"&endTime="+endTime+"&bid="+bid+"&aid="+aid;
+			    function returnBook(hid,card,endTime,bid,aid,borrowPrice,overduePrice) {
+			    	var currentDay = getCurrentDate(1);
+			    	
+			    	
+			    	var day=0;
+			    	day = GetNumberOfDays(endTime,currentDay);
+			    	
+			    	if(day<=0){
+			    		con=confirm("Confirm whether to return the book?"); 
+			    		if(con==true){
+					    	location.href = "/e-library/ReturnBookServlet?hid="+hid+"&card="+card+"&endTime="+endTime+"&bid="+bid+"&aid="+aid;
+					    }
+			    		
+			    		
+			    	}else{
+			    		con=confirm("Confirm whether to return the book?Overdue days："+day+"day，Deduct overdue amount："+overduePrice*day); 
+			    		if(con==true){
+					    	location.href = "/e-library/ReturnBookServlet?hid="+hid+"&card="+card+"&endTime="+endTime+"&bid="+bid+"&aid="+aid;
+					    }
+			    		
 			    	}
+			    	
+			    
 			    }
 			    
+			    
+			    function GetNumberOfDays(date1,date2){
+			        var a1 = Date.parse(new Date(date1));
+			        var a2 = Date.parse(new Date(date2));
+			        var day = parseInt((a2-a1)/ (1000 * 60 * 60 * 24));
+                   
+			        return day
+			    }
+			    
+			    
+			  
+			    function getCurrentDate(format) {
+			      var now = new Date();
+			      var year = now.getFullYear(); 
+			      var month = now.getMonth();
+			      var date = now.getDate();
+			      var day = now.getDay();
+			      var hour = now.getHours();
+			      var minu = now.getMinutes();
+			      var sec = now.getSeconds();
+			      month = month + 1;
+			      if (month < 10) month = "0" + month;
+			      if (date < 10) date = "0" + date;
+			      if (hour < 10) hour = "0" + hour;
+			      if (minu < 10) minu = "0" + minu;
+			      if (sec < 10) sec = "0" + sec;
+			      var time = "";
+			     
+			      if(format==1){
+			        time = year + "-" + month + "-" + date;
+			      }
+			     
+			      else if(format==2){
+			        time = year + "-" + month + "-" + date+ " " + hour + ":" + minu + ":" + sec;
+			      }
+			      return time;
+			    }
 			    
 				function delayBook(hid,endTime) {
 					con = confirm("Confirm if you want to delay returning the book?");
 					if(con == true) {
 						location.href = "/e-library/delayBookServlet?hid=" + hid+"&endTime="+endTime;
 					}
-				}
+				                    
+				 }
+				
 			    
 			    </script>
 			</div>

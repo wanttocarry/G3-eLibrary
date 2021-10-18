@@ -1,8 +1,7 @@
-<%@page import="com.uts.bean.HistoryBean"%>
 <%@page import="com.uts.bean.AdminBean"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page
-	import="com.uts.bean.BookBean,com.uts.dao.BookDao"%>
+	import="com.uts.bean.BookBean,com.uts.bean.HistoryBean,com.uts.dao.BookDao"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="zh-CN" class="ax-vertical-centered">
 
@@ -41,7 +40,7 @@ body {
 					<li><a href="/e-library/book.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> Book information</a></li>
 					<li><a href="/e-library/borrow.jsp"><i
-							class="glyphicon glyphicon-chevron-right"></i>Borrowing information</a></li>
+							class="glyphicon glyphicon-chevron-right"></i> Borrowing information</a></li>
 					<li><a href="/e-library/user_information.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> User information</a></li>
 							<li><a href="/e-library/UserLogOutServlet"><i
@@ -60,11 +59,11 @@ body {
 							</div>
 							<div
 								class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
-								<form class="form-horizontal" action="/e-library/UserSelectServlet"
+								<form class="form-horizontal" action="/e-library/BorrowSlectServlet"
 									method="post">
 									<input type="hidden" name="tip" value="1">
 									<div class="col-lg-7 form-group">
-										<label class="col-lg-4 control-label" for="query_bname">Book information</label>
+										<label class="col-lg-4 control-label" for="query_bname">Borrowing information</label>
 										<div class="col-lg-8">
 											<input class="form-control" id="bookName" name="name"
 												type="text" value=""> <label class="control-label"
@@ -88,91 +87,69 @@ body {
 							<thead>
 								<tr style="color:white;">
 									<th>Book ID</th>
-									<th>Types of books</th>
 									<th>Book name</th>
-									<th>Author name</th>
-									<th>Book publishing house</th>
-									<th>Book price</th>
-									<th>Borrowing price</th>
-									<th>Overdue amount</th>
+									<th>User name</th>
+									<th>Borrowing date</th>
+									<th>Due date</th>
 									<th>operation</th>
+								
 								</tr>
 							</thead>
-
 						
 							<%
 							
-							AdminBean user = (AdminBean)session.getAttribute("admin");
-							int aid = user.getAid();
+							ArrayList<HistoryBean> bookdata = (ArrayList<HistoryBean>)request.getAttribute("data");
 							
-							BookDao bookDao = new BookDao();
+								//ArrayList<HistoryBean> bookdata = new ArrayList<HistoryBean>();
 							
-							Map<String,Object> map =  bookDao.getCountNoReturnNum(aid);
-							
-							int noReturnNum = Integer.parseInt( map.get("count")+"");
-							
-							
-							
-								ArrayList<BookBean> bookdata = new ArrayList<BookBean>();
-								bookdata = (ArrayList<BookBean>) request.getAttribute("data");
-								if (bookdata == null) {
-									BookDao bookdao = new BookDao();
-									bookdata = (ArrayList<BookBean>) bookdao.get_ListInfo();
-								}
-	
-								for (BookBean bean : bookdata) {
+								//AdminBean user =  (AdminBean)session.getAttribute("admin");
+								//int borrowStatus =1;
+								
+								BookDao bookdao = new BookDao();
+									
+									//bookdata = (ArrayList<HistoryBean>) bookdao.get_HistoryListInfo(borrowStatus, user.getAid());
+								for (HistoryBean bean : bookdata) {
 							%>
 							<tbody style="color:#33b031;">
 								<td><%=bean.getCard()%></td>
-								<td><%=bean.getType()%></td>
-								<td><%=bean.getName()%></td>
-								<td><%=bean.getAuthor()%></td>
-								<td><%=bean.getPress()%></td>
-								<td><%=bean.getBookPrice()%></td>
-								<td><%=bean.getBorrowPrice()%></td>
-								<td><%=bean.getOverduePrice()%></td>
+								<td><%=bean.getBookname()%></td>
+								<td><%=bean.getUsername()%></td>
+								<td><%=bean.getBegintime()%></td>
+								<td><%=bean.getEndtime()%></td>
 								<td>
-								<button type="button" class="btn btn-warning btn-xs"
-										data-toggle="modal" data-target="#updateModal" id="btn_update"
-										onclick="borrowBook('<%=bean.getBid()%>','<%=bean.getCard()%>','<%=bean.getName()%>',
-											'<%=bean.getBorrowPrice()%>',<%=admin.getBalance()%>,<%=noReturnNum%>)">Borrow book</button>
+								
+    						<button type="button" class="btn btn-warning btn-xs"
+								data-toggle="modal" onclick="returnBook(<%=bean.getHid()%>,<%=bean.getCard()%>,'<%=bean.getEndtime()%> 00:00:00',<%=bean.getBid()%>,<%=bean.getAid()%>)">Return</button>
+					 
+					                <button type="button" class="btn btn-danger btn-xs"
+										onclick="delayBook(<%=bean.getHid()%>,'<%=bean.getEndtime()%> 00:00:00')">Delay</button>
 								</td>
+							</td>
 							</tbody>
-							<%
-								}
-							%>
-		
-					</table>
-					</div>
-			</div>
-		<script type="text/javascript">
-		
-
-		
-		
-		function borrowBook(bid, card,  name,borrowPrice,balance,noReturnNum){
-			
-			 if(balance<=0||borrowPrice>balance){
-		    		alert("Insufficient account balance, please recharge");
-		    		return;
-		    } else if(noReturnNum>=5){
-		    	
-		    	alert("Exceeds the upper limit of borrowing quantity");
-		    	
-		    	return ;
-		    }
-			 else{
-		    		con=confirm("Confirm whether to borrow books?"); 
-			    	if(con==true){
-			
-						location.href = "/e-library/BorrowBookServlet?bid=" +bid+"&card="+card+"&name="+name+"&borrowPrice="+borrowPrice; 
-			    	}
-			}
-		}
-		
-		
-	</script>
+							<%}%>
+						</table>
+						</div>
+				</div>
 				
+				<script type="text/javascript">
+			    function returnBook(hid,card,endTime,bid,aid) {
+			    	con=confirm("Confirm whether to return the book?"); 
+			    	if(con==true){
+			    		location.href = "/e-library/ReturnBookServlet?hid="+hid+"&card="+card+"&endTime="+endTime+"&bid="+bid+"&aid="+aid;
+			    	}
+			    }
+			    
+			    
+				function delayBook(hid,endTime) {
+					con = confirm("Confirm if you want to delay returning the book?");
+					if(con == true) {
+						location.href = "/e-library/delayBookServlet?hid=" + hid+"&endTime="+endTime;
+					}
+				                    
+				   }
+				
+			    
+			    </script>
 			</div>
 		</div>
 	</div>
