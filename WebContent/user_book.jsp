@@ -42,8 +42,10 @@ body {
 							class="glyphicon glyphicon-chevron-right"></i> Book information</a></li>
 					<li><a href="/e-library/borrow.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> Borrowing information</a></li>
-					<li><a href="#"><i
-							class="glyphicon glyphicon-chevron-right"></i> Book classification management</a></li>
+					<li><a href="/e-library/user_information.jsp"><i
+							class="glyphicon glyphicon-chevron-right"></i> User information</a></li>
+							<li><a href="/e-library/UserLogOutServlet"><i
+							class="glyphicon glyphicon-chevron-right"></i> Log Out </a></li>
 					
 				</ul><br><br>
 				

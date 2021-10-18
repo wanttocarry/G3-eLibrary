@@ -41,8 +41,10 @@ body {
 							class="glyphicon glyphicon-chevron-right"></i> Book information</a></li>
 					<li><a href="/e-library/borrow.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> Borrowing information</a></li>
-					<li><a href="#"><i
-							class="glyphicon glyphicon-chevron-right"></i> Book classification management</a></li>
+					<li><a href="/e-library/user_information.jsp"><i
+							class="glyphicon glyphicon-chevron-right"></i> User information</a></li>
+					<li><a href="/e-library/UserLogOutServlet"><i
+							class="glyphicon glyphicon-chevron-right"></i> Log Out </a></li>
 					
 				</ul><br><br>
 				
@@ -54,12 +56,12 @@ body {
 					<div class="col-md-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<div class="text-muted bootstrap-admin-box-title">Book management</div>
+								<div class="text-muted bootstrap-admin-box-title">Book information</div>
 							</div>
 							<div class="bootstrap-admin-panel-content">
 								<ul>
-									<li>Query the basic information of books according to book name, author and classification</li>
-									<li>Add, modify or delete book information</li>
+									<li>The system can display the book information in the electronic library</li>
+									<li>Users can search books and borrow books on this page</li>
 								</ul>
 							</div>
 						</div>
@@ -67,12 +69,12 @@ body {
 					<div class="col-md-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<div class="text-muted bootstrap-admin-box-title">user management</div>
+								<div class="text-muted bootstrap-admin-box-title">borrowing information</div>
 							</div>
 							<div class="bootstrap-admin-panel-content">
 								<ul>
-									<li>Query basic user information according to account number, name and ID</li>
-									<li>Add, modify, or delete user information</li>
+									<li>The system will display the user's borrowing record</li>
+									<li>On this page, users can search the borrowing record, return books, and apply for delayed return of books</li>
 								</ul>
 							</div>
 						</div>
@@ -83,12 +85,12 @@ body {
 					<div class="col-md-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<div class="text-muted bootstrap-admin-box-title">Book classification management</div>
+								<div class="text-muted bootstrap-admin-box-title">user information</div>
 							</div>
 							<div class="bootstrap-admin-panel-content">
 								<ul>
-									<li>View the book classification information and display the classification ID</li>
-									<li>Add, modify, or delete Book classifications</li>
+									<li>The system will display the user's personal information</li>
+									<li>Users can modify their personal information on this page</li>
 								</ul>
 							</div>
 						</div>
