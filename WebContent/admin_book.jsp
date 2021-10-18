@@ -38,10 +38,10 @@ body {
 				<ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
 					<li><a href="/e-library/admin_book.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> Book management</a></li>
-					<li><a href="#"><i
+					<li><a href="/e-library/admin_user.jsp"><i
 							class="glyphicon glyphicon-chevron-right"></i> user management</a></li>
-					<li><a href="#"><i
-							class="glyphicon glyphicon-chevron-right"></i> Book classification management</a></li>
+					<li><a href="/e-library/UserLogOutServlet"><i
+							class="glyphicon glyphicon-chevron-right"></i> Log out</a></li>
 					
 				</ul><br><br>
 				

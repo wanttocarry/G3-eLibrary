@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
-
 import com.uts.bean.HistoryBean;
 import com.uts.bean.AdminBean;
 import com.uts.bean.BookBean;
@@ -159,7 +158,6 @@ public class BookDao {
 		cd.add(Calendar.DATE, 5);
 		String endtime = sdf.format(cd.getTime());
 
-
 		Connection conn = DBUtil.getConnectDb();
 		String sql = "insert into history(aid,bid,card,bookname,username,begintime,endtime,status) values(?,?,?,?,?,?,?,?)";
 		int rs = 0;
@@ -290,6 +288,40 @@ public class BookDao {
 
 		return SQLUtil.getInstance().update(sql, paramArray);
 
+	}
+
+	public ArrayList<HistoryBean> getBorrowList(String name, int aid) {
+
+		ArrayList<HistoryBean> historyList = new ArrayList<HistoryBean>();
+		Connection conn = DBUtil.getConnectDb();
+		String sql = "select * from history where bookname like '%" + name + "%' and status=1 and aid=" + aid;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			rs = stm.executeQuery();
+			while (rs.next()) {
+				HistoryBean history = new HistoryBean();
+				history.setHid(rs.getInt("hid"));
+				history.setAid(rs.getInt("aid"));
+				history.setBid(rs.getInt("bid"));
+				history.setCard(rs.getString("card"));
+				history.setBookname(rs.getString("bookname"));
+				history.setUsername(rs.getString("username"));
+				history.setBegintime(rs.getString("begintime"));
+				history.setEndtime(rs.getString("endtime"));
+				history.setStatus(rs.getInt("status"));
+				history.setOutPrice(rs.getDouble("outPrice"));
+				history.setOutNum(rs.getInt("outNum"));
+
+				historyList.add(history);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.CloseDB(rs, stm, conn);
+		}
+		return historyList;
 	}
 
 }

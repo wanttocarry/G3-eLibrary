@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.uts.util.SQLUtil;
 import com.uts.bean.AdminBean;
 import com.uts.util.DBUtil;
+import com.uts.util.DBUtil2;
 
 public class AdminDao {
 
@@ -90,17 +92,16 @@ public class AdminDao {
 
 		return SQLUtil.getInstance().update(sql, paramArray);
 	}
-	
-	
+
 	public void updateUser(int aid, String username, String password, String name, String email, String phone,
 			int lend_num, Double balance) {
-	
+
 		Connection conn = DBUtil.getConnectDb();
 		String sql = "update admin set username=?,name=?,email=?,phone=?,password=?,lend_num=?,balance=? where aid=?";
 		PreparedStatement stm = null;
 		try {
 			stm = conn.prepareStatement(sql);
-			
+
 			stm.setString(1, username);
 			stm.setString(2, name);
 			stm.setString(3, email);
@@ -109,12 +110,57 @@ public class AdminDao {
 			stm.setInt(6, lend_num);
 			stm.setDouble(7, balance);
 			stm.setInt(8, aid);
-			
-			
+
 			stm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<AdminBean> getUserListInfo() {
+		ArrayList<AdminBean> tag_Array = new ArrayList<AdminBean>();
+		Connection conn = DBUtil.getConnectDb();
+		String sql = "select * from admin where status=1";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			rs = stm.executeQuery();
+			while (rs.next()) {
+				AdminBean adminbean = new AdminBean();
+				adminbean.setAid(rs.getInt("aid"));
+				adminbean.setUsername(rs.getString("username"));
+				adminbean.setName(rs.getString("name"));
+				adminbean.setPassword(rs.getString("password"));
+				adminbean.setEmail(rs.getString("email"));
+				adminbean.setPhone(rs.getString("phone"));
+				adminbean.setStatus(rs.getInt("status"));
+				adminbean.setLend_num(rs.getInt("lend_num"));
+				adminbean.setBalance(rs.getDouble("balance"));
+				tag_Array.add(adminbean);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.CloseDB(rs, stm, conn);
+		}
+		return tag_Array;
+	}
+
+	public void deleteUserByAid(int aid) {
+
+		Connection conn = DBUtil.getConnectDb();
+		String sql = "delete from admin where aid=?";
+		PreparedStatement stm = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			stm.setInt(1, aid);
+			stm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
